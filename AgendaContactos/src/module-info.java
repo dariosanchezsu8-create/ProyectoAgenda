@@ -1,0 +1,10 @@
+/**
+ * 
+ */
+/**
+ * 
+ */
+module AgendaContactosd {
+	requires Depurador;
+
+}
