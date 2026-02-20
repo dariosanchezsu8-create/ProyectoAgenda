@@ -3,13 +3,16 @@ package AgendaContacto;
 import java.util.Scanner;
 
 import Depurador.Depurador;
+
 /**
  * @author DARIO
  * @version v1.0
  * @since 2026-02-17
  */
 
-
+/**
+ * Se crea un scanner Se crea una agenda
+ */
 public class Aplicacion {
 	Scanner sc = new Scanner(System.in);
 	Agenda unaAgenda = new Agenda();
@@ -19,12 +22,19 @@ public class Aplicacion {
 	}
 
 	public Aplicacion() {
+		/**
+		 * Metodo para cargar tres contactos,controlado por un try-catch Ocurre nada mas
+		 * iniciar la ejecucion
+		 */
 		try {
 			Cargador.cargarContactos(unaAgenda);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
+		/**
+		 * Menu de la agenda con un do-while y dentro un switch
+		 */
 		int opcion = 0;
 		do {
 			System.out.println("Bienvenido a nuestra agenda");
@@ -33,6 +43,9 @@ public class Aplicacion {
 			System.out.println("3) Buscar contacto");
 			System.out.println("4) Eliminar contacto");
 			System.out.println("5) Mostrar agenda completa");
+			/**
+			 * Se controla la entrada para elegir opcion en el menu
+			 */
 			try {
 				opcion = sc.nextInt();
 				sc.nextLine();
@@ -40,6 +53,10 @@ public class Aplicacion {
 				System.err.println("Se debe meter un numero entero. Intentelo de nuevo.");
 				e.printStackTrace();
 			}
+			/**
+			 * Switch con todos los distintos metodos Para mejor organizacion se hace un
+			 * referencia a cada metodo
+			 */
 			switch (opcion) {
 			case 1:
 				mostrarMenuAñadirContacto();
@@ -66,21 +83,35 @@ public class Aplicacion {
 		sc.close();
 	}
 
+	/**
+	 * Metodo para añadir contacto. Importe obtener el nombre porque a partir de
+	 * este se puede aplicar los demas metodos.
+	 */
 	private void mostrarMenuAñadirContacto() {
 		String nombre = "";
 		System.out.println("AÑADIR CONTACTO");
 		System.out.println("Porfavor introduzca el nombre del contacto.");
+		/**
+		 * Metodo que controlado la entrada del teclado por try-catch
+		 */
 		try {
 			nombre = sc.nextLine();
 		} catch (Exception e) {
 			System.err.println("Debe ser una palabra.");
 		}
+		/**
+		 * Se controla el metodo addContacto con try-catch
+		 */
 		try {
 			unaAgenda.addContacto(nombre);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
+		/**
+		 * Conjunto de preguntas para recoletar los datos del contacto. Falta por
+		 * controlar con try-catch las entradas por teclado
+		 */
 		System.out.println("Porfavor introduzca el apellido del contacto.");
 		String a = sc.nextLine();
 		unaAgenda.setApellidos(nombre, a);
@@ -91,6 +122,10 @@ public class Aplicacion {
 		System.out.println("Porfavor ponga una descripción de una palabra del número de teléfono");
 		String descripcion = sc.nextLine();
 		System.out.println("Porfavor introduzca el prefijo de su comunidad autónoma");
+		/**
+		 * Para el telefono hay que transformar la entrada del usuario, es decir, un
+		 * String a un int para poder luego implementarlo en el metodo como int
+		 */
 		int prefijo = Integer.parseInt(sc.nextLine());
 		System.out.println("Porfavor introduzca el número del contacto");
 		int numero = Integer.parseInt(sc.nextLine());
@@ -103,15 +138,26 @@ public class Aplicacion {
 		unaAgenda.addCorreo(nombre, descripcion2, correo);
 	}
 
+	/**
+	 * Metodo para modificar contacto
+	 */
 	private void mostrarMenuModificarContacto() {
 		String nombreBuscado = "";
-		int opcion;
+		int opcion = 0;
 		System.out.println("Porfavor introduzca el nombre del contacto que quieres cambiar");
+		/**
+		 * Controla la entrada por teclado por un try-catch
+		 */
 		try {
 			nombreBuscado = sc.nextLine();
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			System.err.println("Debe ser una palabra.");
+			/**
+			 * Antes de modificar el contacto hay que usar el metodo buscar para encontrar a
+			 * este en la lista de contactos Control del metodo buscarContacto por un
+			 * try-catch
+			 */
 		}
 		try {
 			unaAgenda.buscarContacto(nombreBuscado);
@@ -119,7 +165,10 @@ public class Aplicacion {
 			System.err.println(e.getMessage());
 			return;
 		}
-
+		/**
+		 * Submenu con las diferentes opciones para cambiar la informacion del contacto.
+		 * Se implementa un switch
+		 */
 		do {
 			System.out.println("Menú de modificación de contacto. Elige una opción");
 			System.out.println("1- Modificar nombre del contacto.");
@@ -128,11 +177,16 @@ public class Aplicacion {
 			System.out.println("4- Modificar teléfono del contacto.");
 			System.out.println("5- Modificar correo del contacto.");
 			System.out.println("0- Pasa salir del menú.");
-			opcion = sc.nextInt();
-			sc.nextLine();
-
+			try {
+				opcion = sc.nextInt();
+				sc.nextLine();
+			} catch (Exception e) {
+				System.err.println("Se debe menter un numero entero.");
+			}
 			switch (opcion) {
-
+			/**
+			 * Para caso se cambia un campo del contacto
+			 */
 			case 1:
 				String nombre = "";
 				System.out.println("Porfavor introduzca el nuevo nombre.");
@@ -159,13 +213,24 @@ public class Aplicacion {
 				unaAgenda.setCodigoPostal(nombreBuscado, codigoPostal);
 				break;
 			case 4:
+				/**
+				 * Para la modificacion del telefono se integra otro menu con otro switch
+				 */
+				int opcion2 = 0;
 				do {
 					System.out.println("MODIFICACIÓN TELÉFONO");
 					System.out.println("1- Modificar prefijo o número de teléfono.");
 					System.out.println("2- Modificar por completo teléfono.");
 					System.out.println("0- Para salir del menú.");
-					int opcion2 = sc.nextInt();
-					sc.nextLine();
+					try {
+						opcion2 = sc.nextInt();
+						sc.nextLine();
+					} catch (Exception e) {
+						System.err.println("Se debe meter un numero entero.");
+					}
+					/**
+					 * Para cada caso se cambia un campo de telefono
+					 */
 					switch (opcion2) {
 					case 1:
 						System.out.println("Porfavor introduzca la descripción del teléfono.");
@@ -185,7 +250,12 @@ public class Aplicacion {
 						int prefijo2 = Integer.parseInt(sc.nextLine());
 						System.out.println("Porfavor introduzca el número de su nuevo teléfono.");
 						int numero2 = Integer.parseInt(sc.nextLine());
-						unaAgenda.setTodoTelefono(nombreBuscado, descripcion2, prefijo2, numero2, descripcionNueva);
+						try {
+							unaAgenda.setTodoTelefono(nombreBuscado, descripcion2, prefijo2, numero2, descripcionNueva);
+						} catch (Exception e) {
+							System.err.println(e.getMessage());
+							e.printStackTrace();
+						}
 						break;
 					case 0:
 						System.out.println("Saliendo del menú ...");
@@ -198,14 +268,25 @@ public class Aplicacion {
 
 				break;
 			case 5:
+				/**
+				 * Para cambiar el correo se ha creado un menú controlado por un switch
+				 */
+				int opcion22 = 0;
 				do {
 					System.out.println("MODIFICACIÓN CORREO");
 					System.out.println("1- Modificar solo correo.");
 					System.out.println("2- Modificar descripción o correo.");
 					System.out.println("0- Para salir del menú.");
-					int opcion2 = sc.nextInt();
-					sc.nextLine();
-					switch (opcion2) {
+					try {
+						opcion22 = sc.nextInt();
+						sc.nextLine();
+					} catch (Exception e) {
+						System.err.println("Se debe introducir un numero entero");
+					}
+					/**
+					 * Para cada caso se cambia un campo de correo
+					 */
+					switch (opcion22) {
 					case 1:
 						System.out.println("Porfavor introduzca la descripción inicial.");
 						String descripcion = sc.nextLine();
@@ -245,15 +326,25 @@ public class Aplicacion {
 
 	}
 
+	/**
+	 * Metodo para buscar un contacto poniendo el nombre del contacto deseado
+	 */
 	private void mostrarMenuBuscarContacto() {
 		String nombre = "";
 		System.out.println("BUSCAR CONTACTO");
 		System.out.println("Ingrese el nombre del contacto que quiera buscar.");
+		/**
+		 * Se controla el input del teclado con un try-catch
+		 */
 		try {
 			nombre = sc.nextLine();
 		} catch (Exception e) {
 			System.err.println("Debe ser una palabra.");
 		}
+		/**
+		 * Se controla el metodo buscar con un try-catch por si no encuentra el nombre
+		 * en la lista de contactos
+		 */
 		try {
 			System.out.println(unaAgenda.buscarContacto(nombre));
 		} catch (Exception e) {
@@ -261,6 +352,9 @@ public class Aplicacion {
 		}
 	}
 
+	/**
+	 * Metodo para borrar contacto buscandolo por el nombre del contacto deseado
+	 */
 	private void mostrarMenuBorrarContacto() {
 		String nombre = "";
 		System.out.println("BORRAR CONTACTO");
@@ -270,6 +364,10 @@ public class Aplicacion {
 		} catch (Exception e) {
 			System.err.println("Debe ser una palabra.");
 		}
+		/**
+		 * Condicion de confirmacion, es decir se necesita una confirmacion para poder
+		 * borrar un contacto
+		 */
 		if (nombre != null) {
 			System.out.println("Porfavor comfirme su operación, poniendo [S/N]");
 			String sino = sc.nextLine();
@@ -286,6 +384,9 @@ public class Aplicacion {
 		}
 	}
 
+	/**
+	 * Metodo que imprime la agenda entera con los contactos existentes.
+	 */
 	private void mostrarMenuMostrarAgenda() {
 		System.out.println(unaAgenda.toString());
 	}

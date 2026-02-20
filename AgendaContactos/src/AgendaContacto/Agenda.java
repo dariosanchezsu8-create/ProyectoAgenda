@@ -12,6 +12,16 @@ public class Agenda<Telefono> {
 		contactos = new ArrayList<>();
 	}
 
+	/**
+	 * Metodo para cambiar el apellido de un contacto Este metodo realiza una
+	 * busqueda por nombre en la lista de contacto. Si lo encuentra se sustituirá
+	 * pero si no lo encuentra le pone a ese contacto un nuevo apellido Se ha puesto
+	 * un upperCase para ignorar las minusculas y mayusculas.
+	 * 
+	 * @param nombreContacto por el que se busca
+	 * @param aNuevo         es el nuevo apellido de adquiere el contacto
+	 * @return true/false dependiendo si encuentra el contacto en la lista.
+	 */
 	public boolean setApellidos(String nombreContacto, String aNuevo) {
 		for (int i = 0; i < contactos.size(); i++) {
 			if (contactos.get(i).getNombre().toUpperCase().equals(nombreContacto.toUpperCase())) {
@@ -27,6 +37,15 @@ public class Agenda<Telefono> {
 		return false;
 	}
 
+	/**
+	 * Metodo que cambia el código postal del contacto, aparte de esto si el usuario
+	 * existe sustituye su antiguo codigo postal por el nuevo, si por el contrario
+	 * no existe creara un nuevo usuario con el nuevo codigo postal.
+	 * 
+	 * @param nombreContacto por el que se busca
+	 * @param cNuevo,        el nuevo codigo postal
+	 * @return true/false
+	 */
 	public boolean setCodigoPostal(String nombreContacto, String cNuevo) {
 		for (int i = 0; i < contactos.size(); i++) {
 			if (contactos.get(i).getNombre().toUpperCase().equals(nombreContacto.toUpperCase())) {
@@ -37,6 +56,19 @@ public class Agenda<Telefono> {
 		}
 		return false;
 	}
+
+	/**
+	 * Metodo para añadir un correo a un contacto. Si encuentra el nombre en la
+	 * lista de contactos se añadira el nuevo correo con una descripcion y el
+	 * correo.
+	 * 
+	 * @param nombreContacto
+	 * @param descripcionCorreo
+	 * @param correo
+	 * @return true/false
+	 * @see contactos#añadircorreo
+	 * 
+	 */
 
 	public boolean addCorreo(String nombreContacto, String descripcionCorreo, String correo) {
 		for (int i = 0; i < contactos.size(); i++) {
@@ -54,6 +86,17 @@ public class Agenda<Telefono> {
 
 	}
 
+	/**
+	 * Metodo para añadir un telefono a un contacto. Si encuentra el nombre en la
+	 * lista de contactos se añadira el nuevo telefono con una descripcion, prefijo
+	 * y un numero.
+	 * 
+	 * @param nombreContacto
+	 * @param descripcionCorreo
+	 * @param correo
+	 * @return true/false
+	 * @see contactos#añadirTelefono
+	 */
 	public boolean addTelefono(String nombreContacto, int prefijo, int numero, String descripcionTelefono) {
 		for (int i = 0; i < contactos.size(); i++) {
 			if (contactos.get(i).getNombre().toUpperCase().equals(nombreContacto.toUpperCase())) {
@@ -70,6 +113,16 @@ public class Agenda<Telefono> {
 		return false;
 	}
 
+	/**
+	 * Metodo para añadir el nombre de un contacto. Si no se lanza ninguna de las
+	 * excepciones se añadira el contacto en la lista con un nombre
+	 * 
+	 * @param nombre
+	 * @throws Exception. Una de ellas, por si el usuario no mete ninguna palabra
+	 *                    por teclado. Y la otra, por si en vez de una palabra mete
+	 *                    numeros
+	 * @see contactos#add
+	 */
 	public void addContacto(String nombre) throws Exception {
 		if (nombre.length() == 0 | nombre == null) {
 			throw new Exception("El nombre es un campo obligatorio. Es necesario rellenarlo.");
@@ -84,11 +137,26 @@ public class Agenda<Telefono> {
 
 	}
 
+	/**
+	 * Metodo de delegación.Primero se hace el metodo addContacto. Y una vez que se
+	 * acabe este se utilizara el nombre para el metodo setApellido
+	 * 
+	 * @param nombre
+	 * @param apellidos
+	 * @throws Exception por el metodo addContacto
+	 */
 	public void addContacto(String nombre, String apellidos) throws Exception {// DELEGACION
 		addContacto(nombre);
 		setApellidos(nombre, apellidos);
 	}
 
+	/**
+	 * Metodo para buscar contacto mediante el nombre.
+	 * 
+	 * @param nombre
+	 * @see contactos#toString
+	 * @throws Exception si no se encuentra el nombre en la lista de contactos
+	 */
 	public String buscarContacto(String nombre) throws Exception {
 
 		for (int i = 0; i < contactos.size(); i++) {
@@ -102,6 +170,13 @@ public class Agenda<Telefono> {
 
 	}
 
+	/**
+	 * Metodo para eliminar contacto de la lista de contactos, buscado por el nombre
+	 * del cotacto.
+	 * 
+	 * @param nombre
+	 * @return true/false
+	 */
 	public boolean eliminarContacto(String nombre) {
 		for (int i = 0; i < contactos.size(); i++) {
 			if (contactos.get(i).getNombre().toUpperCase().equals(nombre.toUpperCase())) {
@@ -114,6 +189,17 @@ public class Agenda<Telefono> {
 
 	}
 
+	/**
+	 * Metodo para cambiar el nombre de un contacto. Si encuentra el nombre del
+	 * contactoç se sustituira por un nuevo nombre, sino se crear un usuario con un
+	 * nuevo nombre
+	 * 
+	 * @param nombreContacto
+	 * @param nNuevo
+	 * @return true/false
+	 * @throws Exception
+	 * @see contactos#setNombre
+	 */
 	public boolean setNombre(String nombreContacto, String nNuevo) throws Exception {
 		for (int i = 0; i < contactos.size(); i++) {
 			if (contactos.get(i).getNombre().toUpperCase().equals(nombreContacto.toUpperCase())) {
@@ -127,6 +213,17 @@ public class Agenda<Telefono> {
 		return false;
 	}
 
+	/**
+	 * Metodo para cambiar solo el prefijo y el numero de telefono. Accedemos a
+	 * estos mediante la clave que es la descrepción
+	 * 
+	 * @param descripcion
+	 * @param numero
+	 * @param prefijo
+	 * @param nombre
+	 * @return true/false
+	 * @see contactos#añadirTelefono
+	 */
 	public boolean setPrefijoNumero(String descripcion, int numero, int prefijo, String nombre) {
 		for (int i = 0; i < contactos.size(); i++) {
 			if (contactos.get(i).getNombre().toUpperCase().equals(nombre.toUpperCase())) {
@@ -143,8 +240,22 @@ public class Agenda<Telefono> {
 		return false;
 	}
 
-	public boolean setTodoTelefono(String nombre, String descripcion, int prefijo, int numero,
-			String descripcionNueva) {
+	/**
+	 * Metodo cambiar telefono por completo incluso la descripcion
+	 * 
+	 * @param nombre
+	 * @param descripcion
+	 * @param prefijo
+	 * @param numero
+	 * @param descripcionNueva
+	 * @return true/false
+	 * @throws Exception cuando la descripcion antigua de telefono es igual a la
+	 *                   nueva
+	 * @see contactos#cambiarDescripcionT
+	 * @see contactos#añadirTelefono
+	 */
+	public boolean setTodoTelefono(String nombre, String descripcion, int prefijo, int numero, String descripcionNueva)
+			throws Exception {
 		for (int i = 0; i < contactos.size(); i++) {
 			if (contactos.get(i).getNombre().toUpperCase().equals(nombre.toUpperCase())) {
 				try {
@@ -152,6 +263,10 @@ public class Agenda<Telefono> {
 				} catch (Exception e) {
 					System.err.println(e.getMessage());
 					e.printStackTrace();
+				}
+				if (descripcion == descripcionNueva) {
+					throw new Exception(
+							"La descripción nueva no puede ser igual que la vieja. Porfavor intentelo de nuevo.");
 				}
 				contactos.get(i).añadirTelefono(descripcionNueva, prefijo, numero);
 				Depurador.imprimirTraza("Cambiando " + descripcion + " por " + descripcionNueva);
@@ -169,6 +284,17 @@ public class Agenda<Telefono> {
 
 	}
 
+	/**
+	 * Metodo para cambiar solo el correo mediante la clave que es la descripcion,
+	 * ya que email es un hashMap
+	 * 
+	 * @param descripcion
+	 * @param correo
+	 * @param nombre
+	 * @return true/false
+	 * @see contactos.añadirCorreo
+	 */
+
 	public boolean setCorreo(String descripcion, String correo, String nombre) {
 		for (int i = 0; i < contactos.size(); i++) {
 			if (contactos.get(i).getNombre().toUpperCase().equals(nombre.toUpperCase())) {
@@ -184,6 +310,17 @@ public class Agenda<Telefono> {
 		return false;
 	}
 
+	/**
+	 * Metodo para cambiar correo por completo, incluido la descripcion.
+	 * 
+	 * @param nombre
+	 * @param descripcionNueva
+	 * @param nuevoCorreo
+	 * @param descripcionVieja
+	 * @return true/false
+	 * @throws Exception cuando la descripcion antigua de correo es la misma que la
+	 *                   nueva.
+	 */
 	public boolean setTodoCorreo(String nombre, String descripcionNueva, String nuevoCorreo, String descripcionVieja)
 			throws Exception {
 		for (int i = 0; i < contactos.size(); i++) {
@@ -212,6 +349,14 @@ public class Agenda<Telefono> {
 		return false;
 	}
 
+	/**
+	 * Metodo para arreglar una exception en una situacion concreta, que es cuando
+	 * no se encuentra el nombre en la lista de contactos
+	 * 
+	 * @param nombreBuscado
+	 * @throws Exception
+	 */
+
 	public void excepcion(String nombreBuscado) throws Exception {
 		for (int i = 0; i < contactos.size(); i++) {
 			if (!contactos.get(i).getNombre().toUpperCase().equals(nombreBuscado.toUpperCase())) {
@@ -222,6 +367,11 @@ public class Agenda<Telefono> {
 
 	}
 
+	/**
+	 * Metodo para imprimir la lista de contactos
+	 * 
+	 * @see contactos#toString
+	 */
 	public String toString() {
 		Depurador.imprimirTraza("Imprimiendo lista actual de contactos:");
 		System.out.println("____________");
