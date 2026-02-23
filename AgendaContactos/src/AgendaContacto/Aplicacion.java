@@ -5,7 +5,7 @@ import java.util.Scanner;
 import Depurador.Depurador;
 
 /**
- * @author DARIO
+ * @author dario.sanchez
  * @version v1.0
  * @since 2026-02-17
  */

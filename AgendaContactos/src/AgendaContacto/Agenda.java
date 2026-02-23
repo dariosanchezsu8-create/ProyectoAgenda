@@ -160,7 +160,7 @@ public class Agenda<Telefono> {
 	public String buscarContacto(String nombre) throws Exception {
 
 		for (int i = 0; i < contactos.size(); i++) {
-			if (contactos.get(i).getNombre().equalsIgnoreCase(nombre)) {
+			if (contactos.get(i).getNombre().equals(nombre)) {
 				Depurador.imprimirTraza("Resultados de la búsqueda:");
 				return contactos.get(i).toString();
 			}
@@ -175,7 +175,7 @@ public class Agenda<Telefono> {
 	 * del cotacto.
 	 * 
 	 * @param nombre
-	 * @return true/false
+	 * @return true/falseº
 	 */
 	public boolean eliminarContacto(String nombre) {
 		for (int i = 0; i < contactos.size(); i++) {
@@ -375,7 +375,8 @@ public class Agenda<Telefono> {
 	public String toString() {
 		Depurador.imprimirTraza("Imprimiendo lista actual de contactos:");
 		System.out.println("____________");
-		return contactos.toString();
+		return contactos.toString().replace(",", "").replace(" ", "");// para remplazar la coma
+		// y el espacio al imprimir el ArrayList
 		// esto es para imprimir la agenda completa. Porque cuando se pone el objeto
 	}// te sale tambien ese metodo pero lo unico que te imprimira es la direccion de
 		// ese objeto no lo que contiene

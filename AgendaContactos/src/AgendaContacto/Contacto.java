@@ -109,6 +109,7 @@ public class Contacto {
 		this.codigoPostal = codigoPostal;
 		this.nombre = nombre;
 		telefonos = new HashMap<String, Telefono>();
+		// metodo nuevo del hashMap keyset para imprimir las claves
 		email = new HashMap<String, String>();
 
 	}
@@ -240,10 +241,17 @@ public class Contacto {
 	 * un hashMap Este metodo toString es un metodo propio del hashMap Linea
 	 * separadora para mas claridad para el usuario.
 	 */
+	// No se puede poner un for en un return
 	public String toString() {
-		return "Nombre: " + nombre + "\n" + "Apellidos: " + this.apellidos + "\n" + "Codigo Postal: "
-				+ this.codigoPostal + "\n" + "Telefono : " + telefonos.toString() + "\n" + "Email: " + email.toString()
-				+ "\n" + "________________" + "\n";
+		String resultado = "";
+		resultado += "Nombre: " + nombre + "\n";
+		resultado += "Apellidos: " + this.apellidos + "\n";
+		resultado += "Código Postal :" + this.codigoPostal + "\n";
+		for (String descripcion : telefonos.keySet())
+			resultado += "Telefono : " + telefonos.get(descripcion) + "\n";
+		for (String descripcion : email.keySet())
+			resultado += "Email: " + email.get(descripcion) + "\n" + "________________" + "\n";
+		return resultado;
 	}
 
 }
