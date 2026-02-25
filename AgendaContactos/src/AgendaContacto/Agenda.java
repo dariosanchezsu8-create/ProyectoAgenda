@@ -374,10 +374,7 @@ public class Agenda<Telefono> {
 	 */
 	public String toString() {
 		Depurador.imprimirTraza("Imprimiendo lista actual de contactos:");
-		System.out.println("____________");
-		return contactos.toString().replace(",", "").replace(" ", "");// para remplazar la coma
-		// y el espacio al imprimir el ArrayList
-		// esto es para imprimir la agenda completa. Porque cuando se pone el objeto
+		return contactos.toString().replace(",", "").replace(" ", "").replace("[","").replace("]","");
 	}// te sale tambien ese metodo pero lo unico que te imprimira es la direccion de
 		// ese objeto no lo que contiene
 // entonces para solucionar esto tienes que añadir a la clase de ese objeto un

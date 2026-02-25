@@ -24,7 +24,14 @@ public class Ruta {
 	}
 
 	public void recuperar(Agenda unaAgenda) {
-
+		try {
+			String fichero = Files.readString(Path.of("C:\\Users\\DARIO\\git\\repository\\nuevoRepositorio\\ProyectoAgenda\\AgendaContactos\\src\\Fichero\\agenda.dat"));
+			String[] contactos = fichero.split("\n");
+			for (String contacto : contactos) {
+				System.out.println(contacto);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
-
 }

@@ -244,13 +244,13 @@ public class Contacto {
 	// No se puede poner un for en un return
 	public String toString() {
 		String resultado = "";
-		resultado += "Nombre: " + nombre + "\n";
+		resultado +="Nombre: " + nombre + "\n";
 		resultado += "Apellidos: " + this.apellidos + "\n";
 		resultado += "Código Postal :" + this.codigoPostal + "\n";
 		for (String descripcion : telefonos.keySet())
-			resultado += "Telefono : " + telefonos.get(descripcion) + "\n";
+			resultado += "Telefono : " +descripcion+"="+ telefonos.get(descripcion) + "\n";
 		for (String descripcion : email.keySet())
-			resultado += "Email: " + email.get(descripcion) + "\n" + "________________" + "\n";
+			resultado += "Email: "+descripcion+"=" + email.get(descripcion) + "\n";
 		return resultado;
 	}
 

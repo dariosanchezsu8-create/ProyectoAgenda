@@ -3,6 +3,7 @@ package AgendaContacto;
 import java.util.Scanner;
 
 import Depurador.Depurador;
+import Fichero.Ruta;
 
 /**
  * @author dario.sanchez
@@ -16,12 +17,13 @@ import Depurador.Depurador;
 public class Aplicacion {
 	Scanner sc = new Scanner(System.in);
 	Agenda unaAgenda = new Agenda();
-
 	public static void main(String[] args) {
 		Aplicacion unApp = new Aplicacion();
 	}
 
-	public Aplicacion() {
+	public Aplicacion() {	
+		Ruta r=new Ruta("agenda.dat");
+		r.recuperar(unaAgenda);
 		/**
 		 * Metodo para cargar tres contactos,controlado por un try-catch Ocurre nada mas
 		 * iniciar la ejecucion
@@ -60,18 +62,26 @@ public class Aplicacion {
 			switch (opcion) {
 			case 1:
 				mostrarMenuAñadirContacto();
+				r.guardar(unaAgenda);
+				Depurador.imprimirTraza("Contacto guardado correctamente.");
 				break;
 			case 2:
 				mostrarMenuModificarContacto();
+				r.guardar(unaAgenda);
+				Depurador.imprimirTraza("Contacto guardado correctamente.");
 				break;
 			case 3:
 				mostrarMenuBuscarContacto();
+				r.guardar(unaAgenda);
 				break;
 			case 4:
 				mostrarMenuBorrarContacto();
+				r.guardar(unaAgenda);
+				Depurador.imprimirTraza("Contacto guardado correctamente.");
 				break;
 			case 5:
 				mostrarMenuMostrarAgenda();
+				r.guardar(unaAgenda);
 				break;
 			default:
 				System.out.println("La opción elegida no esta en el menu.");
