@@ -246,11 +246,12 @@ public class Contacto {
 		String resultado = "";
 		resultado +="Nombre: " + nombre + "\n";
 		resultado += "Apellidos: " + this.apellidos + "\n";
-		resultado += "Código Postal :" + this.codigoPostal + "\n";
+		resultado += "Código Postal:" + this.codigoPostal + "\n";
 		for (String descripcion : telefonos.keySet())
-			resultado += "Telefono : " +descripcion+"="+ telefonos.get(descripcion) + "\n";
-		for (String descripcion : email.keySet())
-			resultado += "Email: "+descripcion+"=" + email.get(descripcion) + "\n";
+			resultado += "Telefono: " +descripcion+"="+ telefonos.get(descripcion) + "\n";
+		for (String descripcion: email.keySet())
+			resultado += "Email: "+descripcion+"=" + email.get(descripcion)+ "\n"
+			+"_______________" + "\n";
 		return resultado;
 	}
 
