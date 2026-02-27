@@ -75,7 +75,7 @@ public class Contacto {
 		public String toString() {
 			String prefijo = Integer.toString(this.prefijo);
 			String numero = Integer.toString(this.numero);
-			return numero + prefijo;
+			return numero +"-"+ prefijo;
 		}
 
 	}
@@ -248,9 +248,9 @@ public class Contacto {
 		resultado += "Apellidos: " + this.apellidos + "\n";
 		resultado += "Código Postal:" + this.codigoPostal + "\n";
 		for (String descripcion : telefonos.keySet())
-			resultado += "Telefono: " +descripcion+"="+ telefonos.get(descripcion) + "\n";
+			resultado += "Telefono: " +descripcion+"-"+ telefonos.get(descripcion) + "\n";
 		for (String descripcion: email.keySet())
-			resultado += "Email: "+descripcion+"=" + email.get(descripcion)+ "\n"
+			resultado += "Email: "+descripcion+"-" + email.get(descripcion)+ "\n"
 			+"_______________" + "\n";
 		return resultado;
 	}

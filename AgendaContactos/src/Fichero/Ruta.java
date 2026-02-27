@@ -24,57 +24,90 @@ public class Ruta {
 	}
 
 	public void recuperar(Agenda unaAgenda) {
-		String descripcion="";
-		String correo1="";
+		String nombre = "";
 		try {
-			String fichero = Files.readString(Path.of("D:\\usud\\Dario SS\\PROGRAMACION\\eclipse-workspace2\\ProyectoAgenda\\AgendaContactos\\src\\Fichero\\agenda.dat"));
+			String fichero = Files.readString(Path.of(
+					"D:\\usud\\Dario SS\\PROGRAMACION\\eclipse-workspace2\\ProyectoAgenda\\AgendaContactos\\src\\Fichero\\agenda.dat"));
 			String[] contactos = fichero.split("_______________");
-			for (int i=0;i<contactos.length;i++) {
-				String[] contacto=contactos[i].trim().split("\n");
-				String nombre=contacto[0].replace("Nombre:", "").trim();
-				String apellidos=contacto[1].replace("Apellidos:", "").trim();
-				String codigoPostal=contacto[2].replace("CódigoPostal:", "").trim();
-				String telefono=contacto[3].replace("Telefono:", "").trim();
-				if(i==2) {
-					arrayCorreo(contacto, descripcion, correo1);
-				String correo=contacto[4].replace("Email:", "").trim();
+			for (int i = 0; i < contactos.length; i++) {
+				String[] contacto = contactos[i].trim().split("\n");
+				
+				for (String linea : contacto) {
+					if (linea.startsWith("Nombre:")) {
+						nombre = linea.replace("Nombre:", "").trim();
+						try {
+							unaAgenda.addContacto(nombre);
+						} catch (Exception e) {
+							System.err.println(e.getMessage());
+							e.printStackTrace();
+						}
+
+					}
+
 				}
-				try {
-					unaAgenda.addContacto(nombre);
-				} catch (Exception e) {
-					System.err.println(e.getMessage());
-					e.printStackTrace();
-				}
-				unaAgenda.setApellidos(nombre, apellidos);
-				unaAgenda.setCodigoPostal(nombre, codigoPostal);
-			//	unaAgenda.addTelefono(nombre, "TODO", i, telefono);
-				unaAgenda.addCorreo(nombre, descripcion, correo1);
+				recuperarApellido(contacto, unaAgenda, nombre);
+				recuperarCodigoPostal(contacto, unaAgenda, nombre);
+				recuperarTelefono(contacto, unaAgenda, nombre);
+				recuperarCorreo(contacto, unaAgenda, nombre);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void arrayTelefono(String array[],String descripcion,int numero, int prefijo) {
-		for (int i = 0; i < array.length; i++) {
-			if (i == 3) {
-				String[] telefono = array[i].split("=");
-				descripcion = telefono[0];
-				String numeroTelefono = telefono[1];
-			    numero = Integer.parseInt(numeroTelefono);
+	public void recuperarApellido(String[] contactos, Agenda unaAgenda, String nombre) {
+		String apellido = "";
+		for (String contacto : contactos) {
+			if (contacto.startsWith("Apellidos:")) {
+				apellido = contacto.replace("Apellidos:", "").trim();
+
+				try {
+					unaAgenda.addContacto(nombre, apellido);
+				} catch (Exception e) {
+					System.err.println(e.getMessage());
+					e.printStackTrace();
+				}
 			}
 		}
 	}
-	public void arrayNumero(String[] array) {
-		
+
+	public void recuperarCodigoPostal(String[] contactos, Agenda unaAgenda, String nombre) {
+		String codigoPostal = "";
+		for (String contacto : contactos) {
+			if (contacto.startsWith("Código Postal:")) {
+				codigoPostal = contacto.replace("Código Postal:", "").trim();
+				unaAgenda.setApellidos(nombre, codigoPostal);
+			}
+		}
 	}
 
-	public void arrayCorreo(String array[], String descripcion , String correo) {
-		for (int i = 0; i < array.length; i++) {
-			if (i == 4) {
-				String[] telefono = array[i].split("=");
-				descripcion = telefono[0];
-			    correo = telefono[1];
+	public void recuperarTelefono(String[] contactos, Agenda unaAgenda, String nombre) {
+		String telefono = "";
+		for (String contacto : contactos) {
+			if (contacto.startsWith("Telefono:")) {
+				telefono = contacto.replace("Telefono:", "").trim();
+				String[] objeto = telefono.split("-");
+				String descripcion = objeto[0];
+				String numero = objeto[1];
+				String prefijo = objeto[2];
+				int numeroEntero = Integer.parseInt(numero);
+				int prefijoEntero = Integer.parseInt(prefijo);
+				unaAgenda.addTelefono(nombre, prefijoEntero, numeroEntero, descripcion);
+
+			}
+		}
+	}
+
+	public void recuperarCorreo(String[] contactos, Agenda unaAgenda, String nombre) {
+		String email = "";
+		for (String contacto : contactos) {
+			if (contacto.startsWith("Correo:")) {
+				email = contacto.replace("Correo:", "").trim();
+				String[] objeto = email.split("-");
+				String descripcion = objeto[0];
+				String correo = objeto[1];
+				unaAgenda.addCorreo(nombre, descripcion, correo);
+
 			}
 		}
 	}
